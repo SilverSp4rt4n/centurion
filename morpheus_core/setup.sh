@@ -22,7 +22,11 @@ chmod +x /etc/init.d/startup.sh
 #Copy the interfaces file
 cp ./config/Networking/Interface/interfaces /etc/network/interfaces
 #Add crontab entries for root
-cp ./config/root_crontab /var/spool/cron/crontabs/root
+crontab -l > newcron
+echo "@reboot		/etc/init.d/startup.sh" >> newcron
+echo "@reboot		systemctl start ssh" >> newcron
+crontab newcron
+rm newcron
 #Setup Web Server
 apt-get install apache2 -y
 cp ./WebApp/* /var/www/html/
