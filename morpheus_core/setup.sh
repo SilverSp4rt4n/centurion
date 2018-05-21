@@ -23,6 +23,9 @@ chmod +x /etc/init.d/startup.sh
 cp ./config/Networking/Interface/interfaces /etc/network/interfaces
 #Add crontab entries for root
 cp ./config/root_crontab /var/spool/cron/crontabs/root
+#Setup Web Server
+apt-get install apache2 -y
+cp ./WebApp/* /var/www/html/
 #Make a scripts folder and copy the ifaceSetup script there
 mkdir /etc/scripts
 cp ./config/Networking/Interface/ifaceSetup.py /etc/scripts/ifaceSetup.py
