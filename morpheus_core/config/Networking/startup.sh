@@ -1,5 +1,5 @@
 #!/bin/bash
-sleep 30
+sleep 60
 sudo iptables-restore < /etc/iptables.def
 sudo udhcpd /etc/udhcpd.conf
 if (( $(dpkg -l | grep -E '^ii' | grep network-manager | wc -l) > "0" )); then
