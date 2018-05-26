@@ -1,10 +1,11 @@
 #!/bin/bash
+sleep 30
 echo "Startup data at $(date)" > /var/log/startlog.txt
 sudo iptables-restore < /etc/iptables.def
 if (( $(dpkg -l | grep -E '^ii' | grep network-manager | wc -l) > "0" )); then
 	echo "network-manager is installed." >> /var/log/startlog.txt
 else
-	echo "network-maanger is not installed." >> /var/log/startlog.txt
+	echo "network-manager is not installed." >> /var/log/startlog.txt
 	sudo apt-get install network-manager -y
 fi
 

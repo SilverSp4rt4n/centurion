@@ -1,4 +1,9 @@
+#!/bin/bash
 #Switch to root user
+if [[ $(whoami) != "root" ]]; then
+	echo "Must be root!"
+	exit
+fi
 #Install udhcpd and hostapd to run wireless AP
 apt-get install udhcpd -y
 apt-get install hostapd -y
