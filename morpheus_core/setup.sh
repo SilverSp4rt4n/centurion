@@ -30,6 +30,10 @@ rm newcron
 #Setup Web Server
 apt-get install apache2 -y
 cp ./WebApp/* /var/www/html/
+#Copy the wifi suite to /usr/bin
+cp ./config/Networking/Wireless/listWifi.py /usr/bin/listWifi
+cp ./config/Networking/Wireless/wifiConnect.py /usr/bin/wifiConnect
+cp ./config/Networking/Wireless/wifiDisconnect.py /usr/bin/wifiDisconnect
 #Make a scripts folder and copy the ifaceSetup script there
 mkdir /etc/scripts
 cp ./config/Networking/Interface/ifaceSetup.py /etc/scripts/ifaceSetup.py
