@@ -1,4 +1,9 @@
+#!/bin/bash
 #Switch to root user
+if [[ $(whoami) != "root" ]]; then
+	echo "Must be root!"
+	exit
+fi
 #Install udhcpd and hostapd to run wireless AP
 apt-get install udhcpd -y
 apt-get install hostapd -y
@@ -10,7 +15,7 @@ apt-get install openssh-server -y
 apt install python-pip -y
 pip install wifi
 #Enable packet forwarding for the wireless AP
-echo 1 > /proc/sys/net/ipv4/ip_forward
+echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.conf
 #Copy config files for hostapd and udhcpd
 cp ./config/Networking/Access_Point/hostapd.conf /etc/hostapd/hostapd.conf
 cp ./config/Networking/Access_Point/udhcpd.conf /etc/udhcpd.conf
@@ -30,6 +35,10 @@ rm newcron
 #Setup Web Server
 apt-get install apache2 -y
 cp ./WebApp/* /var/www/html/
+#Copy the wifi suite to /usr/bin
+cp ./config/Networking/Wireless/listWifi.py /usr/bin/wifi-list
+cp ./config/Networking/Wireless/wifiConnect.py /usr/bin/wifi-connect
+cp ./config/Networking/Wireless/wifiDisconnect.py /usr/bin/wifi-disconnect
 #Make a scripts folder and copy the ifaceSetup script there
 mkdir /etc/scripts
 cp ./config/Networking/Interface/ifaceSetup.py /etc/scripts/ifaceSetup.py
