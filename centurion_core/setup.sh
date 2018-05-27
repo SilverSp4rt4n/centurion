@@ -29,6 +29,7 @@ crontab newcron
 rm newcron
 #Setup Web Server
 apt-get install apache2 -y
+apt-get install php -y
 cp ./WebApp/* /var/www/html/
 #Make a scripts folder and copy the ifaceSetup script there
 mkdir /etc/scripts
