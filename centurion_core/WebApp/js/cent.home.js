@@ -1,17 +1,30 @@
+function displayPage(){
+	var container = document.getElementById("pageContainer");
+	container.innerHTML = this.response;
+}
+function importPage(){
+	console.log(this.innerText);
+	var xhr = new XMLHttpRequest();
+	xhr.addEventListener("load",displayPage);
+	xhr.responseType="text";
+	xhr.open("GET",this.innerText + ".html");
+	xhr.send();
+}
 function loadMenu(){
 	console.log(this.response);
 	var menu = document.getElementById("menu");
 	var button = menu.lastChild;
-	//console.log(button);
 	for (var item in this.response){
 		var newButton = document.createElement("BUTTON");
+		
 		newButton.setAttribute("class","menu-button collapsed");
 		newButton.setAttribute("type","button");
 		newButton.setAttribute("aria-expanded","false");
 		newButton.setAttribute("data-toggle","collapse");
 		newButton.setAttribute("data-target","#menu");
+		newButton.addEventListener("click",importPage)
 		newButton.innerText = this.response[item];
-		console.log(newButton);
+		
 		menu.appendChild(newButton);
 	}
 }
@@ -23,4 +36,15 @@ function getMenu(){
 	xhr.send();
 	
 }
-getMenu();
+function main(){
+	getMenu();
+	var xhr = new XMLHttpRequest();
+	xhr.addEventListener("load",function() {
+		var container = document.getElementById("pageContainer");
+		container.innerHTML = this.response;
+	});
+	xhr.responseType="text";
+	xhr.open("GET","Home.html");
+	xhr.send();
+}
+main();
