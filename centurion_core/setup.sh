@@ -14,7 +14,7 @@ apt-get install openssh-server -y
 apt install python-pip -y
 pip install wifi
 #Enable packet forwarding for the wireless AP
-echo 1 > /proc/sys/net/ipv4/ip_forward
+echo "net.ipv4.ip_forward = 1" >> /etc/systl.conf
 #Copy config files for hostapd and udhcpd
 cp ./config/Networking/Access_Point/hostapd.conf /etc/hostapd/hostapd.conf
 cp ./config/Networking/Access_Point/udhcpd.conf /etc/udhcpd.conf
