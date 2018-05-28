@@ -46,5 +46,6 @@ function main(){
 	xhr.responseType="text";
 	xhr.open("GET","Home.html");
 	xhr.send();
+	setInterval(listwifi,10*1000);
 }
 main();
