@@ -35,9 +35,13 @@ rm newcron
 apt-get install apache2 -y
 apt-get install php -y
 cp -r ./WebApp/* /var/www/html/
+#Copy the wifi suite to /usr/bin
+cp ./config/Networking/Wireless/listWifi.py /usr/bin/wifi-list
+cp ./config/Networking/Wireless/wifiConnect.py /usr/bin/wifi-connect
+cp ./config/Networking/Wireless/wifiDisconnect.py /usr/bin/wifi-disconnect
 #Add Necessary Sudo privileges to www-data
-chown root ./config/WebApp/011-www-data-wifi
-cp ./config/WebApp/011-www-data-wifi /etc/sudoers.d/011-www-data-wifi
+sudo chown root ./config/WebApp/011_www-data-wifi
+sudo cp ./config/WebApp/011_www-data-wifi /etc/sudoers.d/011_www-data-wifi
 #Make a scripts folder and copy the ifaceSetup script there
 mkdir /etc/scripts
 cp ./config/Networking/Interface/ifaceSetup.py /etc/scripts/ifaceSetup.py
