@@ -1,0 +1,19 @@
+.collapse{
+	background-color: #c2c2d6 !important;
+	opacity: 0.8 !important;
+}
+.menu-button{
+	display: block;
+	margin: 0 auto;
+	background-color: #007bff;
+	text-decoration: none;
+	font-size: 1.6rem;	
+	border: none;
+	width: 100%;
+	color: white;
+	
+}
+.loading-icon{
+	display: block;
+	margin: auto;
+}

@@ -29,7 +29,11 @@ crontab newcron
 rm newcron
 #Setup Web Server
 apt-get install apache2 -y
+apt-get install php -y
 cp ./WebApp/* /var/www/html/
+#Add Necessary Sudo privileges to www-data
+chown root ./config/WebApp/011-www-data-wifi
+cp ./config/WebApp/011-www-data-wifi /etc/sudoers.d/011-www-data-wifi
 #Make a scripts folder and copy the ifaceSetup script there
 mkdir /etc/scripts
 cp ./config/Networking/Interface/ifaceSetup.py /etc/scripts/ifaceSetup.py
