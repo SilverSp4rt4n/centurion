@@ -7,6 +7,7 @@ if (( $(dpkg -l | grep -E '^ii' | grep network-manager | wc -l) > "0" )); then
 else
 	echo "network-manager is not installed." >> /var/log/startlog.txt
 	sudo apt-get install network-manager -y
+	sudo NetworkManager
 fi
 
 while (( $(ps -A | grep udhcpd | wc -l) < "1" )); do
