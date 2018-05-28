@@ -1,4 +1,8 @@
 #Switch to root user
+if [[ $(whoami) != "root" ]]; then
+	echo "Must be root!"
+	exit
+fi
 #Install udhcpd and hostapd to run wireless AP
 apt-get install udhcpd -y
 apt-get install hostapd -y
@@ -30,7 +34,7 @@ rm newcron
 #Setup Web Server
 apt-get install apache2 -y
 apt-get install php -y
-cp ./WebApp/* /var/www/html/
+cp -r ./WebApp/* /var/www/html/
 #Add Necessary Sudo privileges to www-data
 chown root ./config/WebApp/011-www-data-wifi
 cp ./config/WebApp/011-www-data-wifi /etc/sudoers.d/011-www-data-wifi
