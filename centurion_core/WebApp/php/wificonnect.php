@@ -1,5 +1,9 @@
 <?php
 $ssid = $_POST["ssid"];
-exec("nmcli dev wifi list | grep '" + $ssid + "' | awk '{print \$NF}'",$output);  
-echo $output;
+$mode = $_POST["mode"];
+if($mode == "encryption"){
+	$cmd = "sudo nmcli dev wifi list | grep '".$ssid."' | awk '{print \$NF}'";
+	exec($cmd,$output);  
+	echo $output[0];
+}
 ?>

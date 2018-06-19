@@ -6,4 +6,3 @@ while (i < len(networkList)):
 	if (networkList[i].ssid!="The Sonic"):
 		print networkList[i].ssid
 	i += 1
-encryption_file.close()

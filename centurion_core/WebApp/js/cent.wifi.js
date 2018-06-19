@@ -17,16 +17,35 @@ function inCurrentList(ssid){
 	}
 	return false;
 }
+function getEncryption(ssid,encryptionType){
+
+	var xhr = new XMLHttpRequest;
+	xhr.responseType = "text";
+	xhr.addEventListener("load",function(){
+		if(encryptionType!=null){
+			encryptionType.innerText=this.response;
+		}
+	});
+	xhr.open("POST","php/wificonnect.php");
+	xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+	xhr.send("ssid="+ssid+"&mode=encryption");
+	
+}
 function buildModal(ssid){
 	//All of the new modal tags
 	var newModal = document.createElement("DIV");
 	var newDialog = document.createElement("DIV");
 	var newContent = document.createElement("DIV");
 	var newHeader = document.createElement("DIV");
+	var newBody = document.createElement("DIV");
 	
 	//Content to go inside of the modal
 	var head = document.createElement("H4");
 	var exit = document.createElement("BUTTON");
+	var label = document.createElement("P");
+	var passInput = document.createElement("INPUT");
+	var encryptionType = document.createElement("P");
+	var connectButton = document.createElement("BUTTON");
 
 	//Configure Modal Tags
 	newModal.setAttribute("class","modal");
@@ -39,6 +58,8 @@ function buildModal(ssid){
 
 	newHeader.setAttribute("class","modal-header");
 	
+	newBody.setAttribute("class","modal-body");
+
 	//Configure Content Tags
 	head.setAttribute("class","modal-title");
 	head.innerText = "Connect to " + ssid + ":";
@@ -48,10 +69,28 @@ function buildModal(ssid){
 	exit.setAttribute("data-dismiss","modal");
 	exit.innerText = "\u00D7"
 
+	label.innerText = "Password:";
 	
+	passInput.setAttribute("type","password");
+	passInput.setAttribute("id","passInput");
+	
+	connectButton.innerText = "Connect";
+	connectButton.setAttribute("type","button");
+	connectButton.setAttribute("class","btn btn-primary");
+	connectButton.onclick = function(){
+		console.log("Connecting to " + ssid);
+	};
+	getEncryption(ssid,encryptionType);
+	//Append everything
+	newBody.appendChild(label);
+	console.log(encryptionType.innerText);
+	newBody.appendChild(passInput);
+	newBody.appendChild(encryptionType);
+	newBody.appendChild(connectButton);
 	newHeader.appendChild(head);
 	newHeader.appendChild(exit);
 	newContent.appendChild(newHeader);
+	newContent.appendChild(newBody);
 	newDialog.appendChild(newContent);
 	newModal.appendChild(newDialog);
 	return newModal;
@@ -62,15 +101,6 @@ function cleanssid(theString){
 }
 function connectresult(){
 	console.log(this.response);
-}
-function connectwifi(){
-	var ssid = this.innerText;
-	var xhr = new XMLHttpRequest;
-	xhr.responseType = "text";
-	xhr.addEventListener("load",connectresult);
-	xhr.open("POST","php/wificonnect.php");
-	xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
-	xhr.send("ssid="+ssid);
 }
 function loadwifi(){
 	var container = document.getElementById("WifiContainer");
