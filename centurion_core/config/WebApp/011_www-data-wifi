@@ -1,3 +1,6 @@
 www-data ALL=(ALL) NOPASSWD: /usr/bin/wifi-list
-ww-data ALL=(ALL) NOPASSWD: /usr/bin/wifi-connect
+www-data ALL=(ALL) NOPASSWD: /usr/bin/wifi-connect
 www-data ALL=(ALL) NOPASSWD: /usr/bin/wifi-disconnect
+www-data ALL=(ALL) NOPASSWD: /usr/bin/nmcli
+www-data ALL=(ALL) NOPASSWD: /bin/grep
+www-data ALL=(ALL) NOPASSWD: /usr/bin/awk
