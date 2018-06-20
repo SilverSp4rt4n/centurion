@@ -18,7 +18,7 @@ function inCurrentList(ssid){
 	return false;
 }
 function getEncryption(ssid,encryptionType){
-
+	
 	var xhr = new XMLHttpRequest;
 	xhr.responseType = "text";
 	xhr.addEventListener("load",function(){
@@ -46,11 +46,12 @@ function buildModal(ssid){
 	var passInput = document.createElement("INPUT");
 	var encryptionType = document.createElement("P");
 	var connectButton = document.createElement("BUTTON");
+	var connectionStatus = document.createElement("P");
 
 	//Configure Modal Tags
 	newModal.setAttribute("class","modal");
 	newModal.setAttribute("id",cleanssid(ssid)+"modal");
-	newModal.ssid = ssid;
+	//newModal.ssid = ssid;
 
 	newDialog.setAttribute("class","modal-dialog");
 	
@@ -72,21 +73,44 @@ function buildModal(ssid){
 	label.innerText = "Password:";
 	
 	passInput.setAttribute("type","password");
-	passInput.setAttribute("id","passInput");
+	passInput.setAttribute("id","passInput"+cleanssid(ssid));
+	
+	connectionStatus.setAttribute("id","status"+cleanssid(ssid));
 	
 	connectButton.innerText = "Connect";
 	connectButton.setAttribute("type","button");
 	connectButton.setAttribute("class","btn btn-primary");
 	connectButton.onclick = function(){
+		connectionStatus.innerText="Attempting to connect...";
 		console.log("Connecting to " + ssid);
+		var password = document.getElementById("passInput"+cleanssid(ssid)).value;
+		console.log("Trying password " + password);
+		var xhr = new XMLHttpRequest;
+		xhr.responseType = "text";
+		xhr.addEventListener("load",function(){
+			if(connectionStatus!=null){
+				if(this.response.indexOf("success")>=0){
+				connectionStatus.innerText="Connected!";
+				}else{
+				connectionStatus.innerText="Failed.";
+				}
+				console.log(this.response);
+			}
+		});
+		xhr.open("POST","php/wificonnect.php");
+		xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+		xhr.send("ssid="+ssid+"&mode=connect&password="+password);
 	};
+
 	getEncryption(ssid,encryptionType);
+	
 	//Append everything
 	newBody.appendChild(label);
 	console.log(encryptionType.innerText);
 	newBody.appendChild(passInput);
 	newBody.appendChild(encryptionType);
 	newBody.appendChild(connectButton);
+	newBody.appendChild(connectionStatus);
 	newHeader.appendChild(head);
 	newHeader.appendChild(exit);
 	newContent.appendChild(newHeader);
@@ -125,14 +149,19 @@ function loadwifi(){
 		var iterator = children.length
 		for(var i = iterator-1; i >= 0; i-- ) {
 			if(inNextList(children[i].ssid,itemArray)==false && children[i].tagName!="H4"){
-					children[i].parentNode.removeChild(children[i]);
+				if(children[i].id.indexOf("modal")<0){	
+				children[i].parentNode.removeChild(children[i]);
+				}
 			}
 			
 		}
 		for (var item in this.response){
 			if(inCurrentList(this.response[item])==false){
 			var newButton = document.createElement("BUTTON");
+			if(document.getElementById(cleanssid(this.response[item])+"modal")==null){
 			var newModal = buildModal(this.response[item]);
+			container.appendChild(newModal);
+			}
 			newButton.setAttribute("id",cleanssid(this.response[item])+"btn");
 			newButton.setAttribute("class","menu-button");
 			newButton.setAttribute("type","button");
@@ -144,7 +173,6 @@ function loadwifi(){
 			newButton.myModal = cleanssid(this.response[item]) + "modal";
 
 			container.appendChild(newButton);
-			container.appendChild(newModal);
 			}
 		}
 	}
