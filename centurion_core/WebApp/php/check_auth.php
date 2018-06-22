@@ -8,8 +8,5 @@ foreach($sess_json as $key => $value){
 	$valid = "true";
 	}
 }
-if($valid == "true"){
-exec("ls ../ | grep .html | sed -e 's/.html//g' | grep -v index ",$output);
-echo json_encode($output);
-}
+echo $valid;
 ?>

@@ -42,6 +42,9 @@ cp ./config/Networking/Wireless/wifiDisconnect.py /usr/bin/wifi-disconnect
 #Add Necessary Sudo privileges to www-data
 sudo chown root ./config/WebApp/011_www-data-wifi
 sudo cp ./config/WebApp/011_www-data-wifi /etc/sudoers.d/011_www-data-wifi
+#Add Webapp authentication files
+sudo mkdir /etc/auth
+sudo cp ./config/WebApp/auth/* /etc/auth/
 #Make a scripts folder and copy the ifaceSetup script there
 mkdir /etc/scripts
 cp ./config/Networking/Interface/ifaceSetup.py /etc/scripts/ifaceSetup.py

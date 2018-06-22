@@ -1,3 +1,41 @@
+var valid_session = "";
+function getCookie(cname){
+	var name = cname + "=";
+	var decodedCookie = decodeURIComponent(document.cookie);
+	var ca = decodedCookie.split(';');
+	for(var i = 0; i < ca.length; i++){
+		var c = ca[i];
+		while(c.charAt(0) == ' '){
+			c = c.substring(1);
+		}
+		if (c.indexOf(name) == 0){
+			return c.substring(name.length,c.length);
+		}
+	}
+	return "";
+}
+function checkSession(){
+	var xhr = new XMLHttpRequest();
+	xhr.addEventListener("load",function(){
+		console.log(this.response);
+		var cookies = document.cookie;
+		//check if sessionid is valid
+		if(this.response == "true"){
+		var xhrr = new XMLHttpRequest();
+		xhrr.addEventListener("load",function() {
+		var container = document.getElementById("pageContainer");
+		container.innerHTML = this.response;
+		});
+		xhrr.responseType="text";
+		xhrr.open("GET","Home.html");
+		xhrr.send();
+		}
+	});
+	xhr.responseType="text";
+	xhr.open("GET","php/check_auth.php");
+	xhr.send();
+
+}
 function displayPage(){
 	var container = document.getElementById("pageContainer");
 	container.innerHTML = this.response;
@@ -29,23 +67,19 @@ function loadMenu(){
 	}
 }
 function getMenu(){
+	var cookies = document.cookie;
+	if(cookies.indexOf('sessionid') >= 0){
 	var xhr = new XMLHttpRequest();
 	xhr.addEventListener("load",loadMenu);
 	xhr.responseType="json";
-	xhr.open("GET","php/pagelist.php");
-	xhr.send();
+	xhr.open("POST","php/pagelist.php");
+	xhr.send("sessionid="+getCookie("sessionid"));
+	}
 	
 }
 function main(){
+	checkSession();
 	getMenu();
-	var xhr = new XMLHttpRequest();
-	xhr.addEventListener("load",function() {
-		var container = document.getElementById("pageContainer");
-		container.innerHTML = this.response;
-	});
-	xhr.responseType="text";
-	xhr.open("GET","Home.html");
-	xhr.send();
 	setInterval(listwifi,10*1000);
 }
 main();
