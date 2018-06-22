@@ -45,7 +45,9 @@ sudo cp ./config/WebApp/011_www-data-wifi /etc/sudoers.d/011_www-data-wifi
 #Add Webapp authentication files
 sudo mkdir /etc/auth
 sudo cp ./config/WebApp/auth/* /etc/auth/
-#Make a scripts folder and copy the ifaceSetup script there
+sudo chmod 666 /etc/auth/credentials.json
+sudo chmod 666 /etc/auth/sessions.json
+Make a scripts folder and copy the ifaceSetup script there
 mkdir /etc/scripts
 cp ./config/Networking/Interface/ifaceSetup.py /etc/scripts/ifaceSetup.py
 /etc/scripts/ifaceSetup.py
