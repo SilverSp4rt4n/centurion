@@ -12,6 +12,8 @@ if($valid == "true"){
 	$ssid = $_POST["ssid"];
 	$mode = $_POST["mode"];
 	$password = $_POST["password"];
+	$ssid = str_replace("'","\'",$ssid);
+	$password = str_replace("'","\'",$password);
 
 	if($mode == "encryption"){
 		$cmd = "sudo nmcli dev wifi list | grep '".$ssid."' | awk '{print \$NF}'";
