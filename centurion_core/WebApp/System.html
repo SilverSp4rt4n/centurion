@@ -1,0 +1,18 @@
+<script> diskUsage(); </script>
+<div class="container">
+	<h1> System Management </h1>
+	<div style="text-align:center">
+		<hr/>
+		<h2> Power </h2>
+		<button type="button" onclick="reboot()" class="btn btn-warning">Reboot</button><br>
+		<button type="button" onclick="shutdown()" class="btn btn-danger">Shutdown</button>
+		<div id="PowerStatus"></div>
+		<hr/>
+		<h2> Storage </h2>
+		<div id="DiskBar" class="progress">
+
+		</div>
+
+		<hr/>
+	</div>
+</div>

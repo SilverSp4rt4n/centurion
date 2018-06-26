@@ -37,7 +37,18 @@ function checkSession(){
 
 }
 function displayPage(){
+	//get pageContainer
 	var container = document.getElementById("pageContainer");
+	
+	//Run any inline javascript
+	var startIndex = this.response.indexOf("<script>") + "<script>".length;
+	var endIndex = this.response.indexOf("</script>") - "</script>".length;
+	console.log(startIndex+":"+endIndex);
+	if(startIndex>=0 && endIndex>=0){
+		eval(this.response.substr(startIndex,endIndex));
+	}
+
+	//Display new page
 	container.innerHTML = this.response;
 }
 function importPage(){
