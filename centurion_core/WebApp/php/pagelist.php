@@ -10,6 +10,18 @@ foreach($sess_json as $key => $value){
 }
 if($valid == "true"){
 exec("ls ../ | grep .html | sed -e 's/.html//g' | grep -v index ",$output);
-echo json_encode($output);
+$json_list = json_encode($output);
+
+//Make sure Home is the first item in the list
+$arr = json_decode($json_list);
+for ($i = 0; $i < count($arr); $i++){
+	if ($arr[$i] == "Home"){
+		$temp = $arr[0];
+		$arr[0] = $arr[$i];
+		$arr[$i] = $temp;
+	}
+}
+$json_list = json_encode($arr);
+echo $json_list;
 }
 ?>
