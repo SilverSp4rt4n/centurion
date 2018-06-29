@@ -9,4 +9,6 @@ fi
 rm /var/www/html/CTF.html
 rm /var/www/html/php/CTF.php
 rm /var/www/html/js/cent.ctf.js
-
+#Remove CTF users
+userdel -r ctf1
+userdel -r ctf2

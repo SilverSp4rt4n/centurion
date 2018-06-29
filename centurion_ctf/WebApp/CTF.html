@@ -1,3 +1,64 @@
+<script> 
+var imported = document.createElement("SCRIPT");
+imported.src = 'js/cent.ctf.js'
+document.head.appendChild(imported);
+</script>
 <div class="container">
 	<h1>CTF Configuration</h1>
+	Instructions:
+	<ol>
+		<li>Upload the source code for the vulnerable service </li>
+		<li>(Optional) Upload the flag file to be obtained after exploiting the vulnerable service </li>
+		<li>Select what type of service to deploy</li>
+		<li>(Optional) Select the flag to be obtained after exploiting the vulnerable service </li>
+		<li>Deploy the service.</li>
+	</ol>
+	<h2>Deploy Vulnerable Service</h2><hr/>
+	<h3>Service Type</h3>
+	<div class="dropdown">
+		<button type="button" id="serviceDrop" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+		Select Service Type
+		</button>
+		<div class="dropdown-menu">
+			<a class="dropdown-item" onclick="dropSelect('Local Service','serviceDrop')">Local Service</a>
+			<a class="dropdown-item" onclick="dropSelect('Network Service','serviceDrop')">Network Service</a>
+		</div>
+	</div>
+	<br>
+	<h3>Source Code</h3>
+	<div class="dropdown">
+		<button type="button" onclick="getSourceList()" id="sourceDrop" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+		Select File
+		</button>
+		<div class="dropdown-menu" id="sourceMenu">
+		</div>
+	</div>
+	<br>
+	<h3>Flag</h3>
+	<div class="dropdown">
+		<button type="button" onclick="getFlagList()" id="flagDrop" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+		Select Flag
+		</button>
+		<div class="dropdown-menu" id="flagMenu">
+		</div>
+	</div>
+	<br>	
+	<button type="button" id="deployService" class="btn btn-danger"> Deploy Service </button>		
+	<br><hr/>
+	<h2>Upload Source Code</h2>
+	<p>Currently only C source code is supported.</p>
+	<form action ="php/CTF.php" method="post" enctype="multipart/form-data">
+		Select File to Upload:
+		<input type="file" name="sourceCode" id="sourceCode"><br>
+		<input type="submit" class="btn btn-primary" value="Upload File" name="submitSource">
+	</form>
+	<br><hr/>
+	<h2>Upload Flag</h2>
+	<p>Should be a plaintext file with a flag inside</p>
+	<form action ="php/CTF.php" method="post" enctype="multipart/form-data">
+		Select File to Upload:
+		<input type="file" name="flag" id="flag"><br>
+		<input type="submit" class="btn btn-primary" value="Upload File" name="submitFlag">
+	</form>
+	<hr/>
 </div>
