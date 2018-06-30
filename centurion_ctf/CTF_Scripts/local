@@ -1,0 +1,53 @@
+#!/usr/bin/python
+import sys
+import os
+
+bad_chars = [";","#","$","{"]
+
+def last(aString,aCharacter):
+    index = -1
+    for i in range(len(aString)):
+        if(aString[i]==aCharacter):
+            index = i
+    return index
+
+def main():
+    if(len(sys.argv) < 2):
+        print("Usage: ./local.py <path to source code> <path to flag (optional)>")
+        exit(-1)
+    #Check to see if file exists
+    if(os.path.isfile(sys.argv[1])==False):
+        print("File not found!")
+        exit(-2)
+    if(len(sys.argv)>2 and os.path.isfile(sys.argv[2])==False):
+        print("Flag not found!")
+        exit(-3)
+    #Check for dangerous filenames
+    for char in bad_chars:
+        if(char in sys.argv[1]):
+            print("Invalid Filename!")
+            exit(-4)
+        if(len(sys.argv)>2 and char in sys.argv[2]):
+            print("Invalid Flag Filename!")
+            exit(-5)
+    #Get file extension
+    filetype = sys.argv[1][last(sys.argv[1],".")+1:]
+    #Get output name
+    output = sys.argv[1][last(sys.argv[1],"/")+1:last(sys.argv[1],".")]
+    #Get current directory
+    cwd = os.getcwd() + "/"
+    print(cwd)
+    if(filetype=="c"):
+        os.system("gcc " + sys.argv[1] + " -o " + cwd + output)
+        os.system("sudo chown ctf2.ctf2 " + output)
+        os.system("sudo chmod 4711 " + output)
+        os.system("sudo mv ./" + output + " /opt/challenges/")
+    
+    #Copy flag over
+    if(len(sys.argv)>2):
+        flagname = sys.argv[2][last(sys.argv[2],"/")+1:]
+        os.system("cp " + sys.argv[2] + " /opt/challenges/")
+        os.system("chown ctf2.ctf2 /opt/challenges/" + flagname)
+        os.system("chmod 600 /opt/challenges/"+flagname)
+
+main()
