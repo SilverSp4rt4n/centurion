@@ -16,7 +16,18 @@ if($valid == "true"){
 	elseif($_POST["mode"]=="flaglist"){
 		exec("ls /opt/flags",$output);
 		echo json_encode($output);
-	}else{
+	}
+	elseif($_POST["mode"]=="deploylocal"){
+		$cmd = "exit";
+		if(file_exists("/opt/source/".$_POST['source'])){
+			$cmd = "sudo local-ctf /opt/source/".$_POST['source'];
+		}
+		if(file_exists("/opt/flags/".$_POST['flag'])){
+			$cmd = $cmd." /opt/flags/".$_POST['flag'];
+		}
+		exec($cmd,$output);
+	}
+	else{
 	if(isset($_POST["submitSource"])){
 		$target_file = "/opt/source/".basename($_FILES["sourceCode"]["name"]);
 		move_uploaded_file($_FILES["sourceCode"]["tmp_name"],$target_file);
@@ -26,7 +37,6 @@ if($valid == "true"){
 		move_uploaded_file($_FILES["flag"]["tmp_name"],$target_file);
 		echo "Flag Uploaded.";
 	}
-	echo "All good.";
 	}
 }
 ?>

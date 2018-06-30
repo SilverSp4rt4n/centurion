@@ -20,6 +20,9 @@ chown www-data /opt/challenges
 cp ./CTF_Scripts/local /usr/bin/local-ctf
 chown root.root /usr/bin/local-ctf
 chmod 755 /usr/bin/local-ctf
+#Add sudoers file
+chown root.root ./config/012_www-data-ctf
+cp ./config/012_www-data-ctf /etc/sudoers.d/012_www-data-ctf
 #Create ctf users
 echo "Adding CTF users...you will be prompted to create passwords for them!"
 adduser ctf1
