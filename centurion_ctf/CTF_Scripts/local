@@ -42,7 +42,30 @@ def main():
         os.system("sudo chown ctf2.ctf2 " + output)
         os.system("sudo chmod 4711 " + output)
         os.system("sudo mv ./" + output + " /opt/challenges/")
-    
+    elif(filetype=="cpp"):    
+        os.system("g++ " + sys.argv[1] + " -o " + cwd + output)
+        os.system("sudo chown ctf2.ctf2 " + output)
+        os.system("sudo chmod 4711 " + output)
+        os.system("sudo mv ./" + output + " /opt/challenges/")
+    elif(filetype=="py"):
+        wrapper = open(output+".cpp","w");
+        wrapperCode = [
+            "#include <iostream>\n",
+            "#include <bits/stdc++.h>\n",
+            "#include <string>\n",
+            "using namespace std;\n"
+            "int main(int argc, char *argv[])\n",
+            "{\n",
+            "system(\"python " + sys.argv[1] + "\");\n",
+            "}\n"]
+        wrapper.writelines(wrapperCode)
+        wrapper.close()
+        os.system("g++ " + output + ".cpp" + " -o " + output)
+        os.system("sudo chown ctf2.ctf2 " + output)
+        os.system("sudo chmod 4711 " + output)
+        os.system("sudo mv ./" + output + " /opt/challenges/")
+        os.system("rm " + output + ".cpp")
+
     #Copy flag over
     if(len(sys.argv)>2):
         flagname = sys.argv[2][last(sys.argv[2],"/")+1:]
