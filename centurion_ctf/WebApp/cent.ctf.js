@@ -51,8 +51,24 @@ function deployLocal(){
 	xhr.send(request);
 	alert("Local Service " + sourceDrop.innerText + " deployed.");
 }
+function deployNetwork(){
+	var xhr = new XMLHttpRequest();
+	xhr.addEventListener("load",function(){
+		console.log(this.response)	
+	});
+	xhr.responseType="text";
+	xhr.open("POST","php/CTF.php");
+	xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+	var request = "mode=deploynetwork&source="+ sourceDrop.innerText + "&flag=" + flagDrop.innerText;
+	console.log(request);
+	xhr.send(request);
+	alert("Network Service " + sourceDrop.innerText + " deployed.");
+}
 function deploy(){
 	if(serviceDrop.innerText=="Local Service"){
-		deployLocal()
+		deployLocal();
+	}
+	if(serviceDrop.innerText=="Network Service"){
+		deployNetwork();
 	}
 }

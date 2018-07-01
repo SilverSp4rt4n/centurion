@@ -27,6 +27,16 @@ if($valid == "true"){
 		}
 		exec($cmd,$output);
 	}
+	elseif($_POST["mode"]=="deploynetwork"){
+		$cmd = "exit";
+		if(file_exists("/opt/source/".$_POST['source'])){
+			$cmd = "sudo network-ctf /opt/source/".$_POST['source'];
+		}
+		if(file_exists("/opt/flags/".$_POST['flag'])){
+			$cmd = $cmd." /opt/flags/".$_POST['flag'];
+		}
+		exec($cmd,$output);
+	}
 	else{
 	if(isset($_POST["submitSource"])){
 		$target_file = "/opt/source/".basename($_FILES["sourceCode"]["name"]);

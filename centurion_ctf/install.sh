@@ -18,8 +18,11 @@ chown www-data /opt/flags
 chown www-data /opt/challenges
 #Copy Challenge Generation Scripts into /usr/bin
 cp ./CTF_Scripts/local /usr/bin/local-ctf
+cp ./CTF_Scripts/network /usr/bin/network-ctf
 chown root.root /usr/bin/local-ctf
+chown root.root /usr/bin/network-ctf
 chmod 755 /usr/bin/local-ctf
+chmod 755 /usr/bin/network-ctf
 #Add sudoers file
 chown root.root ./config/012_www-data-ctf
 cp ./config/012_www-data-ctf /etc/sudoers.d/012_www-data-ctf
