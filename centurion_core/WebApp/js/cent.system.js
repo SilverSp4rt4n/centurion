@@ -73,3 +73,32 @@ function changepass(){
 	xhr.send(request);
 	
 }
+function getApSettings(){
+	var xhr = new XMLHttpRequest;
+	xhr.responseType = "json";
+	xhr.addEventListener("load",function(){
+		var data = JSON.parse(this.response);
+		ssid.placeholder = data[0];
+		passphrase.placeholder = data[1];
+	});
+	xhr.open("POST","php/system.php");
+	xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+	xhr.send("mode=aplist");
+}
+function setApSettings(){
+	var xhr = new XMLHttpRequest;
+	xhr.responseType = "text";
+	xhr.addEventListener("load",function(){
+		console.log(this.response);
+		if(document.getElementById("APStatus")!=null){
+			APStatus.setAttribute("class","alert alert-info alert-dismissible fade show");
+			APStatus.innerHTML += "<button type='button' class='close' data-dismiss='alert'>&times;</button>";
+			APStatus.innerHTML += "<strong>" + this.response + "</strong>";
+	}
+	});
+	xhr.open("POST","php/system.php");
+	xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+	var request = "mode=apset&ssid=" + ssid.value + "&passphrase=" + passphrase.value;
+	console.log(request);
+	xhr.send(request);
+}

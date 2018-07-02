@@ -1,3 +1,4 @@
+<script> getApSettings(); </script>
 <div class="container">
 	<h1>System Settings</h1><hr/>
 	<h3>Web App Settings</h3>
@@ -11,5 +12,14 @@
 		<input id="confirmpass" type="password"><br>
 		<button class="btn btn-primary" onclick="changepass()" type="button">Change Password</button><br>
 		<p id="statustext"></p>
-	</div>
+	</div><hr/>
+	<h3>Access Point Settings</h3>
+	<div style="display:table;text-align:right">
+		<label for "ssid">SSID:</label>
+		<input id="ssid" type="text"><br>
+		<label for "passphrase">Passphrase:</label>
+		<input id="passphrase" type="text"><br>
+		<button class="btn btn-primary" onclick="setApSettings()" type="button">Apply Changes</button><br>
+		<div id="APStatus"></div>
+	<div>
 </div>

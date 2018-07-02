@@ -33,6 +33,21 @@ if($valid == "true"){
 			$creds_json[$username]=md5($_POST['newpass']);
 			file_put_contents("/etc/auth/credentials.json",json_encode($creds_json));
 		}
+	}elseif($mode=="aplist"){
+		exec("sudo ap-manage list -",$output);
+		echo(json_encode($output[0]));
+	}elseif($mode=="apset"){
+		if(isset($_POST['ssid']) && $_POST['ssid'] != ""){
+			$_POST['ssid'] = str_replace(";","",$_POST['ssid']);
+			$cmd = "sudo ap-manage ssid ".$_POST['ssid'];
+			exec($cmd);
+		}
+		if(isset($_POST['passphrase']) && $_POST['passphrase'] !=""){
+			$_POST['passphrase'] = str_replace(";","",$_POST['passphrase']);
+			$cmd = "sudo ap-manage password ".$_POST['passphrase'];
+			exec($cmd);
+		}
+		echo "Settings Updated.";
 	}
 }else{
 	echo "Invalid Authentication.";
