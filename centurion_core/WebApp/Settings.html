@@ -1,4 +1,15 @@
 <div class="container">
-	<h1>System Settings</h1>
-	<p></p>
+	<h1>System Settings</h1><hr/>
+	<h3>Web App Settings</h3>
+	<h4>Change My Password</h4>
+	<div style="display:table;text-align:right">
+		<label for="oldpass">Old Password:</label>
+		<input id="oldpass" type="password"><br>
+		<label for="newpass">New Password:</label>
+		<input id="newpass" type="password"><br>
+		<label for="confirmpass">Re-Type New Password:</label>
+		<input id="confirmpass" type="password"><br>
+		<button class="btn btn-primary" onclick="changepass()" type="button">Change Password</button><br>
+		<p id="statustext"></p>
+	</div>
 </div>

@@ -56,3 +56,20 @@ function diskUsage(){
 	xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
 	xhr.send("mode=usage");
 }
+function changepass(){
+	//Check to see if the new passwords match
+	if(newpass.value != confirmpass.value){
+		statustext.innerHTML = "New passwords don't match!";
+		return;
+	}
+	var xhr = new XMLHttpRequest;
+	xhr.responseType = "text";
+	xhr.addEventListener("load",function(){
+		statustext.innerHTML = this.response;
+	});
+	xhr.open("POST","php/system.php");
+	xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+	var request = "mode=changepass&oldpass="+oldpass.value+"&newpass="+newpass.value;
+	xhr.send(request);
+	
+}
