@@ -39,7 +39,7 @@ if($valid == "true"){
 	}elseif($mode=="apset"){
 		if(isset($_POST['ssid']) && $_POST['ssid'] != ""){
 			$_POST['ssid'] = str_replace(";","",$_POST['ssid']);
-			$cmd = "sudo ap-manage ssid ".$_POST['ssid'];
+			$cmd = "sudo ap-manage ssid \"".$_POST['ssid']."\"";
 			exec($cmd);
 		}
 		if(isset($_POST['passphrase']) && $_POST['passphrase'] !=""){
