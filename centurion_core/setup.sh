@@ -39,14 +39,18 @@ cp -r ./WebApp/* /var/www/html/
 cp ./config/Networking/Wireless/listWifi.py /usr/bin/wifi-list
 cp ./config/Networking/Wireless/wifiConnect.py /usr/bin/wifi-connect
 cp ./config/Networking/Wireless/wifiDisconnect.py /usr/bin/wifi-disconnect
+#Copy the AP manager to /usr/bin
+cp ./config/Networking/Access_Point/ap-manage.py /usr/bin/ap-manage
 #Add Necessary Sudo privileges to www-data
 sudo chown root ./config/WebApp/011_www-data-wifi
 sudo cp ./config/WebApp/011_www-data-wifi /etc/sudoers.d/011_www-data-wifi
 #Add Webapp authentication files
 sudo mkdir /etc/auth
 sudo cp ./config/WebApp/auth/* /etc/auth/
-sudo chmod 666 /etc/auth/credentials.json
-sudo chmod 666 /etc/auth/sessions.json
+sudo chown www-data.www-data /etc/auth/credentials.json
+sudo chown www-data.www-data /etc/auth/sessions.json
+sudo chmod 600 /etc/auth/credentials.json
+sudo chmod 600 /etc/auth/sessions.json
 Make a scripts folder and copy the ifaceSetup script there
 mkdir /etc/scripts
 cp ./config/Networking/Interface/ifaceSetup.py /etc/scripts/ifaceSetup.py
