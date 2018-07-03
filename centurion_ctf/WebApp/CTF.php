@@ -36,6 +36,28 @@ if($valid == "true"){
 			$cmd = $cmd." /opt/flags/".$_POST['flag'];
 		}
 		exec($cmd,$output);
+	}elseif($_POST["mode"]=="getservices"){
+		$services = file_get_contents("/opt/challenges/challenges.json");
+		$json_services = json_decode($services);
+		//Get Status of each service
+		foreach($json_services as $key =>$val){
+			if($val->{"Service Type"}=="Local"){
+				if(file_exists("/opt/challenges/".$key)){
+					$val->Status="Installed.";
+				}else{
+					$val->Status="Not Installed.";
+				}
+			}elseif($val->{"Service Type"}=="Network"){
+				$cmd = "ps -A | grep ".$key." | wc -l";
+				exec($cmd,$output);
+				if($output[0]=="1"){
+					$val->Status="Running";
+				}else{
+					$val->Status="Not Running";
+				}
+			}
+		}
+		echo(json_encode($json_services));	
 	}
 	else{
 	if(isset($_POST["submitSource"])){

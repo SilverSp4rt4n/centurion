@@ -1,8 +1,26 @@
 #!/usr/bin/python
 import sys
 import os
+import json
 
 bad_chars = [";","#","$","{"]
+
+def parseJSON(source,flag):
+    #If the challenges.json file already exists, read from it.
+    if(os.path.isfile("/opt/challenges/challenges.json")):
+        json_file = open("/opt/challenges/challenges.json","r")
+        json_data = json.load(json_file)
+        json_file.close()
+        json_data[source] = {}
+        json_data[source].update({"Service Type":"Local","Flag":flag,"User":"ctf2"})
+    else:
+        json_data = {}
+        json_data[source] = {}
+        json_data[source].update({"Service Type":"Local","Flag":flag,"User":"ctf2"})
+    new_json = open("/opt/challenges/challenges.json","w")
+    json.dump(json_data,new_json)
+    new_json.close()
+    os.system("chown www-data.www-data /opt/challenges/challenges.json")
 
 def last(aString,aCharacter):
     index = -1
@@ -72,5 +90,9 @@ def main():
         os.system("cp " + sys.argv[2] + " /opt/challenges/")
         os.system("chown ctf2.ctf2 /opt/challenges/" + flagname)
         os.system("chmod 600 /opt/challenges/"+flagname)
+    #Add to JSON data
+        parseJSON(output,flagname)
+    else:
+        parseJSON(output,"None")
 
 main()

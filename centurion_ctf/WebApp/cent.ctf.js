@@ -38,6 +38,47 @@ function getFlagList(){
 	xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
 	xhr.send("mode=flaglist");
 }
+function getServices(){
+	var xhr = new XMLHttpRequest();
+	xhr.addEventListener("load",function(){
+		serviceTableBody.innerHTML = "";
+		var json_data = JSON.parse(this.response);
+		for(var key in json_data){
+			//Build new table
+			var newRow = document.createElement("TR");
+			var Service = document.createElement("TD");
+			var Flag = document.createElement("TD");
+			var ServiceType = document.createElement("TD");
+			var User = document.createElement("TD");
+			var Status = document.createElement("TD");
+			var Erase = document.createElement("BUTTON");
+			Service.innerHTML = key;
+			Flag.innerHTML = json_data[key]["Flag"];
+			ServiceType.innerHTML = json_data[key]["Service Type"];
+			User.innerHTML = json_data[key]["User"];
+			Status.innerHTML = json_data[key]["Status"];
+			if(json_data[key]["Status"]=="Running" || json_data[key]["Status"]=="Installed."){
+				newRow.setAttribute("class","table-success");
+			}else{
+				newRow.setAttribute("class","table-danger");
+			}
+			Erase.setAttribute("class","btn btn-danger");
+			Erase.innerHTML = "Erase";
+			newRow.appendChild(Service);
+			newRow.appendChild(ServiceType);
+			newRow.appendChild(Flag);
+			newRow.appendChild(User);
+			newRow.appendChild(Status);
+			newRow.appendChild(Erase);
+			serviceTableBody.appendChild(newRow);
+
+		}
+	});
+	xhr.responseType="text";
+	xhr.open("POST","php/CTF.php");
+	xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+	xhr.send("mode=getservices");
+}
 function deployLocal(){
 	var xhr = new XMLHttpRequest();
 	xhr.addEventListener("load",function(){
@@ -72,3 +113,4 @@ function deploy(){
 		deployNetwork();
 	}
 }
+setInterval(getServices,5000);
