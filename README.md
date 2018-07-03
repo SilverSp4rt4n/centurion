@@ -9,9 +9,6 @@ A multi-part software suite focused on making security-based Raspberry Pi projec
 |1.1.2	       |Centurion\_CTF added. Supports deploying vulnerable local and network services from C,C++ & Python source code.    |
 
 ## Todo List
-* Centurion\_Core
-  * Support changing web app credentials inside the web application
-  * Support changing the access point SSID and password inside the web application
 * Centurion\_CTF
   * Create "Live Mode": an operation which locks down the Pi during a CTF competition
   * Support uploading .zip files with C/C++ source code and a makefile
