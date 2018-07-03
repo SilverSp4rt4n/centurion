@@ -25,6 +25,11 @@ function getFlagList(){
 	var xhr = new XMLHttpRequest();
 	xhr.addEventListener("load",function(){
 		flagMenu.innerHTML = "";
+		var item = document.createElement("A");
+		item.setAttribute("class","dropdown-item");
+		item.setAttribute("onclick","dropSelect('--None--','flagDrop')");
+		item.innerText="--None--";
+		flagMenu.appendChild(item);
 		for(var file in this.response){
 			var item = document.createElement("A");
 			item.setAttribute("class","dropdown-item");
