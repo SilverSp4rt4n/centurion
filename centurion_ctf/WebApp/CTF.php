@@ -58,6 +58,23 @@ if($valid == "true"){
 			}
 		}
 		echo(json_encode($json_services));	
+	}elseif($_POST["mode"]=="eraseservice"){
+		$service = $_POST["service"];
+		$json_services = json_decode(file_get_contents("/opt/challenges/challenges.json"));
+		$cmd = "rm /opt/challenges/".$service;
+		exec($cmd);
+		foreach($json_services as $key => $val){
+			if($key == $service){
+				$flag = $val->Flag;
+				unset($json_services->{$key});
+			}
+		}
+		if(file_exists("/opt/challenges/".$flag)){
+			$cmd = "rm /opt/challenges/".$flag;
+			exec($cmd);
+		}
+		file_put_contents("/opt/challenges/challenges.json",json_encode($json_services));
+		echo("".$service." Erased.");
 	}
 	else{
 	if(isset($_POST["submitSource"])){

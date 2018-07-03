@@ -13,9 +13,9 @@ cp ./WebApp/cent.ctf.js /var/www/html/js/cent.ctf.js
 mkdir /opt/source/
 mkdir /opt/flags/
 mkdir /opt/challenges/
-chown www-data /opt/source
-chown www-data /opt/flags
-chown www-data /opt/challenges
+chown www-data.www-data /opt/source
+chown www-data.www-data /opt/flags
+chown www-data.www-data /opt/challenges
 #Copy Challenge Generation Scripts into /usr/bin
 cp ./CTF_Scripts/local /usr/bin/local-ctf
 cp ./CTF_Scripts/network /usr/bin/network-ctf

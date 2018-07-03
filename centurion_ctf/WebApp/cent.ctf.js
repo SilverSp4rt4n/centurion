@@ -64,6 +64,7 @@ function getServices(){
 			}
 			Erase.setAttribute("class","btn btn-danger");
 			Erase.innerHTML = "Erase";
+			Erase.setAttribute("onclick","eraseService(\""+key+"\")");
 			newRow.appendChild(Service);
 			newRow.appendChild(ServiceType);
 			newRow.appendChild(Flag);
@@ -79,10 +80,22 @@ function getServices(){
 	xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
 	xhr.send("mode=getservices");
 }
+function eraseService(service){
+	var xhr = new XMLHttpRequest();
+	xhr.addEventListener("load",function(){
+		console.log(this.response);
+		getServices();
+	});
+	xhr.responseType="text";
+	xhr.open("POST","php/CTF.php");
+	xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+	xhr.send("mode=eraseservice&service="+service);
+}
 function deployLocal(){
 	var xhr = new XMLHttpRequest();
 	xhr.addEventListener("load",function(){
-		console.log(this.response)	
+		console.log(this.response);
+		getServices();
 	});
 	xhr.responseType="text";
 	xhr.open("POST","php/CTF.php");
@@ -95,7 +108,8 @@ function deployLocal(){
 function deployNetwork(){
 	var xhr = new XMLHttpRequest();
 	xhr.addEventListener("load",function(){
-		console.log(this.response)	
+		console.log(this.response);	
+		getServices();
 	});
 	xhr.responseType="text";
 	xhr.open("POST","php/CTF.php");
