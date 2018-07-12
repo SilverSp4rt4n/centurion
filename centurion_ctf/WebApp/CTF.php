@@ -36,15 +36,27 @@ if($valid == "true"){
 			$cmd = $cmd." /opt/flags/".$_POST['flag'];
 		}
 		exec($cmd,$output);
+	}elseif($_POST["mode"]=="deployweb"){
+		echo("Deploying web app...\n");
+		if(file_exists("/opt/source/".$_POST['source'])){
+			$cmd = "sudo web-ctf /opt/source/".$_POST['source'];
+			exec($cmd,$output);
+			//print_r($output,true);
+		}
+		echo("Done.");
 	}elseif($_POST["mode"]=="getservices"){
 		$services = file_get_contents("/opt/challenges/challenges.json");
 		$json_services = json_decode($services);
 		//Get Status of each service
 		foreach($json_services as $key =>$val){
 			if($val->{"Service Type"}=="Local"){
-				if(file_exists("/opt/challenges/".$key) && file_exists("/opt/challenges/".$val->{"Flag"})){
-					$val->Status="Installed.";
-				}elseif(!file_exists("/opt/challenges/".$val->{"Flag"}) && file_exists("/opt/challenges/".$key)){
+				if(file_exists("/opt/challenges/".$key)){
+				       	if($val->{"Flag"}=="None" || file_exists("/opt/challenges/".$val->{"Flag"})){
+						$val->Status="Installed.";
+					}else{
+						$val->Status="Missing Flag";
+					}
+				}elseif(!file_exists("/opt/challenges/".$val->{"Flag"}) && $val->{"Flag"}!="None" &&file_exists("/opt/challenges/".$key)){
 
 					$val->Status="Missing Flag";
 				}else{
@@ -53,10 +65,20 @@ if($valid == "true"){
 			}elseif($val->{"Service Type"}=="Network"){
 				$cmd = "ps -A | grep ".$key." | wc -l";
 				exec($cmd,$output);
-				if($output[0]=="1"){
+				if($output[0]=="1" && file_exists("/opt/challenges/".$val->{"Flag"})){
 					$val->Status="Running";
+				}elseif(!file_exists("/opt/challenges/".$val->{"Flag"})){
+					$val->Status="Missing Flag";
 				}else{
 					$val->Status="Not Running";
+				}
+			}elseif($val->{"Service Type"}=="Web"){
+				$cmd1 = "ls /opt/challenges/web/ | wc -l";
+				exec($cmd1,$output1);
+				if($output1[0]=="0"){
+					$val->Status="Not Installed";
+				}else{
+					$val->Status="Running";
 				}
 			}
 		}
@@ -70,6 +92,10 @@ if($valid == "true"){
 			if($key == $service){
 				$flag = $val->Flag;
 				unset($json_services->{$key});
+			}
+			if($val->{"Service Type"}=="Web"){
+				exec("sudo a2dissite 001-challenge.conf");	
+
 			}
 		}
 		if(file_exists("/opt/challenges/".$flag)){

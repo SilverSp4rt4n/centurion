@@ -1,0 +1,65 @@
+#!/usr/bin/python
+import sys
+import os
+import json
+
+bad_chars = [";","#","$","{"]
+
+def parseJSON(source,flag):
+    #If the challenges.json file already exists, read from it.
+    if(os.path.isfile("/opt/challenges/challenges.json")):
+        json_file = open("/opt/challenges/challenges.json","r")
+        json_data = json.load(json_file)
+        json_file.close()
+        json_data[source] = {}
+        json_data[source].update({"Service Type":"Web","Flag":flag,"User":"ctf1"})
+    else:
+        json_data = {}
+        json_data[source] = {}
+        json_data[source].update({"Service Type":"Web","Flag":flag,"User":"ctf1"})
+    new_json = open("/opt/challenges/challenges.json","w")
+    json.dump(json_data,new_json)
+    new_json.close()
+    os.system("chown www-data.www-data /opt/challenges/challenges.json")
+
+def last(aString,aCharacter):
+    index = -1
+    for i in range(len(aString)):
+        if(aString[i]==aCharacter):
+            index = i
+    return index
+
+def main():
+    if(len(sys.argv) < 2):
+        print("Usage: ./web-ctf.py <path to source zip> ")
+        exit(-1)
+    #Check to see if file exists
+    if(os.path.isfile(sys.argv[1])==False):
+        print("File not found!")
+        exit(-2)
+    #Check for dangerous filenames
+    for char in bad_chars:
+        if(char in sys.argv[1]):
+            print("Invalid Filename!")
+            exit(-4)
+    #Get file extension
+    filetype = sys.argv[1][last(sys.argv[1],".")+1:]
+    #Get output name
+    output = sys.argv[1][last(sys.argv[1],"/")+1:last(sys.argv[1],".")]
+    #Get current directory
+    if(filetype=="zip"):
+        #Wipe the web directory and rebuild it
+        os.system("rm -r /opt/challenges/web/*")
+        #Extract the .zip
+        os.system("unzip " + sys.argv[1] + " -d /opt/challenges/web")
+        #Modify directory permissions
+        os.system("chown -R ctf1.ctf1 /opt/challenges/web")
+        #Bring up Challenge Site
+        os.system("a2ensite 001-challenge.conf")
+        #parseJSON
+        parseJSON(output,"None")
+        #Restart apache
+        os.system("service apache2 restart")
+    else:
+        print("Invalid filetype.")
+main()

@@ -126,12 +126,29 @@ function deployNetwork(){
 	xhr.send(request);
 	alert("Network Service " + sourceDrop.innerText + " deployed.");
 }
+function deployWeb(){
+	var xhr = new XMLHttpRequest();
+	xhr.addEventListener("load",function(){
+		console.log(this.response);	
+		getServices();
+	});
+	xhr.responseType="text";
+	xhr.open("POST","php/CTF.php");
+	xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+	var request = "mode=deployweb&source="+ sourceDrop.innerText;
+	console.log(request);
+	xhr.send(request);
+	alert("Web Service " + sourceDrop.innerText + " deployed.");
+}
 function deploy(){
 	if(serviceDrop.innerText=="Local Service"){
 		deployLocal();
 	}
 	if(serviceDrop.innerText=="Network Service"){
 		deployNetwork();
+	}
+	if(serviceDrop.innerText=="Web Service"){
+		deployWeb();
 	}
 }
 setInterval(getServices,5000);

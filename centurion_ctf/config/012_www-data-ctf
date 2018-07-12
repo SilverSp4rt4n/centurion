@@ -1,2 +1,5 @@
 www-data ALL=(ALL) NOPASSWD: /usr/bin/local-ctf
 www-data ALL=(ALL) NOPASSWD: /usr/bin/network-ctf
+www-data ALL=(ALL) NOPASSWD: /usr/bin/web-ctf
+www-data ALL=(ALL) NOPASSWD: /usr/sbin/a2ensite
+www-data ALL=(ALL) NOPASSWD: /usr/bin/a2dissite

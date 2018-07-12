@@ -19,6 +19,7 @@ chown www-data.www-data /opt/challenges
 #Copy Challenge Generation Scripts into /usr/bin
 cp ./CTF_Scripts/local /usr/bin/local-ctf
 cp ./CTF_Scripts/network /usr/bin/network-ctf
+cp ./CTF_Scripts/web /usr/bin/web-ctf
 chown root.root /usr/bin/local-ctf
 chown root.root /usr/bin/network-ctf
 chmod 755 /usr/bin/local-ctf
@@ -34,3 +35,10 @@ adduser ctf2
 apt-get install gcc
 apt-get install g++
 apt-get install make
+apt-get install libapache2-mpm-itk
+apt-get install zip
+#Setup Challenge Web Server
+cp ./config/001-challenge.conf /etc/apache2/sites-available/
+mkdir /opt/challenges/web
+chown ctf1.ctf1 /opt/challenges/web
+chmod 744 /opt/challenges/web

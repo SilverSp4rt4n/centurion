@@ -38,6 +38,7 @@ document.head.appendChild(imported);
 		<div class="dropdown-menu">
 			<a class="dropdown-item" onclick="dropSelect('Local Service','serviceDrop')">Local Service</a>
 			<a class="dropdown-item" onclick="dropSelect('Network Service','serviceDrop')">Network Service</a>
+			<a class="dropdown-item" onclick="dropSelect('Web Service','serviceDrop')">Web Service</a>
 		</div>
 	</div>
 	<br>
@@ -62,7 +63,7 @@ document.head.appendChild(imported);
 	<button type="button" id="deployService" onclick="deploy()" class="btn btn-danger"> Deploy Service </button>		
 	<br><hr/>
 	<h2>Upload Source Code</h2>
-	<p>Currently only C,C++, and Python source code is supported.</p>
+	<p>Currently only C,C++, and Python source code is supported. Web applications with HTML, CSS, JS and PHP can be uploaded and deployed as a .zip archive</p>
 	<form action ="php/CTF.php" method="post" enctype="multipart/form-data">
 		Select File to Upload:
 		<input type="file" name="sourceCode" id="sourceCode"><br>
