@@ -64,6 +64,8 @@ function getServices(){
 			Status.innerHTML = json_data[key]["Status"];
 			if(json_data[key]["Status"]=="Running" || json_data[key]["Status"]=="Installed."){
 				newRow.setAttribute("class","table-success");
+			}else if(json_data[key]["Status"]=="Missing Flag"){
+				newRow.setAttribute("class","table-warning");
 			}else{
 				newRow.setAttribute("class","table-danger");
 			}

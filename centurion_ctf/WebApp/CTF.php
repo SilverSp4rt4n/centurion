@@ -42,8 +42,11 @@ if($valid == "true"){
 		//Get Status of each service
 		foreach($json_services as $key =>$val){
 			if($val->{"Service Type"}=="Local"){
-				if(file_exists("/opt/challenges/".$key)){
+				if(file_exists("/opt/challenges/".$key) && file_exists("/opt/challenges/".$val->{"Flag"})){
 					$val->Status="Installed.";
+				}elseif(!file_exists("/opt/challenges/".$val->{"Flag"}) && file_exists("/opt/challenges/".$key)){
+
+					$val->Status="Missing Flag";
 				}else{
 					$val->Status="Not Installed.";
 				}
