@@ -42,3 +42,7 @@ cp ./config/001-challenge.conf /etc/apache2/sites-available/
 mkdir /opt/challenges/web
 chown ctf1.ctf1 /opt/challenges/web
 chmod 744 /opt/challenges/web
+#Setup Live Mode
+mkdir /etc/ctf-live
+echo "0" > /etc/ctf-live/live-mode
+cp ./CTF_Scripts/live /usr/bin/live-ctf

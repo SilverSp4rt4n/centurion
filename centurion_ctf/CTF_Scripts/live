@@ -1,0 +1,38 @@
+#!/usr/bin/python
+import sys
+import os
+
+def checkLive():
+    liveFile = open("/etc/ctf-live/live-mode","r")
+    status = liveFile.read()
+    liveFile.close()
+    return status
+
+def toggleLive():
+    status = checkLive().replace("\n","")
+    if(status=="0" or status=="1"):
+        liveFile = open("/etc/ctf-live/live-mode","w")
+    print(status)
+    if(status=="0"):
+        print("Live mode is disabled. Enabling...")
+        liveFile.write("1")
+        os.system("passwd -l pi")
+    elif(status=="1"):
+        print("Live mode is enabled. Disabling...")
+        liveFile.write("0")
+        os.system("passwd -u pi")
+    else:
+        print("Unknown status.")
+        exit(-2)
+    liveFile.close()
+
+
+
+if(len(sys.argv)<2):
+    print(sys.argv[0] + " <check/toggle>")
+    exit(-1)
+else:
+    if(sys.argv[1]=="check"):
+        print(checkLive())
+    elif(sys.argv[1]=="toggle"):
+        toggleLive()

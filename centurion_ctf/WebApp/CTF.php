@@ -12,6 +12,12 @@ if($valid == "true"){
 	if($_POST["mode"]=="list"){
 		exec("ls /opt/source",$output);
 		echo json_encode($output);
+	}elseif($_POST["mode"]=="getlive"){
+		exec("cat /etc/ctf-live/live-mode",$output);
+		echo($output[0]);
+	}elseif($_POST["mode"]=="togglelive"){
+		exec("sudo live-ctf toggle",$output);
+		echo($output[0]);
 	}
 	elseif($_POST["mode"]=="flaglist"){
 		exec("ls /opt/flags",$output);

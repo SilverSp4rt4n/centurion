@@ -1,6 +1,50 @@
 function test(){
 	console.log("Hello, World!");
 }
+function getLive(){
+	var xhr = new XMLHttpRequest();
+	xhr.addEventListener("load",function(){
+		console.log(this.response);
+		if(this.response=="0"){
+			liveOff.innerHTML="<strong>Off</strong>";
+			liveOn.innerHTML="On";
+			liveOn.setAttribute("class","btn btn-secondary");
+			liveOff.setAttribute("class","btn btn-success");
+		}else if(this.response=="1"){
+			liveOff.innerHTML="Off";
+			liveOn.innerHTML="<strong>On</strong>";
+			liveOn.setAttribute("class","btn btn-danger");
+			liveOff.setAttribute("class","btn btn-dark");
+		}
+	});
+	xhr.responseType="text";
+	xhr.open("POST","php/CTF.php");
+	xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+	xhr.send("mode=getlive");
+}
+function toggleLive(setting){
+	console.log("Toggling live mode...");
+	if(setting=="Off"){
+		liveOff.innerHTML="<strong>Off</strong>";
+		liveOn.innerHTML="On";
+		liveOn.setAttribute("class","btn btn-secondary");
+		liveOff.setAttribute("class","btn btn-success");
+	}else if(setting=="On"){
+		liveOff.innerHTML="Off";
+		liveOn.innerHTML="<strong>On</strong>";
+		liveOn.setAttribute("class","btn btn-danger");
+		liveOff.setAttribute("class","btn btn-dark");
+	}
+	var xhr = new XMLHttpRequest();
+	xhr.addEventListener("load",function(){
+		console.log(this.response);
+		getLive();
+	});
+	xhr.responseType="text";
+	xhr.open("POST","php/CTF.php");
+	xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+	xhr.send("mode=togglelive");
+}
 function dropSelect(selection,id){
 	document.getElementById(id).innerText=selection;
 }
@@ -152,3 +196,4 @@ function deploy(){
 	}
 }
 setInterval(getServices,5000);
+getLive();
