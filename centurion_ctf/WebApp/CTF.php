@@ -86,6 +86,7 @@ if($valid == "true"){
 	}elseif($_POST["mode"]=="eraseservice"){
 		$service = $_POST["service"];
 		$json_services = json_decode(file_get_contents("/opt/challenges/challenges.json"));
+		$restartWeb = 0;
 		$cmd = "rm /opt/challenges/".$service;
 		exec($cmd);
 		foreach($json_services as $key => $val){
@@ -94,8 +95,8 @@ if($valid == "true"){
 				unset($json_services->{$key});
 			}
 			if($val->{"Service Type"}=="Web"){
-				exec("sudo a2dissite 001-challenge.conf");	
-
+				exec("sudo a2dissite 001-challenge.conf");
+				$restartWeb = 1;
 			}
 		}
 		if(file_exists("/opt/challenges/".$flag)){
@@ -104,6 +105,9 @@ if($valid == "true"){
 		}
 		file_put_contents("/opt/challenges/challenges.json",json_encode($json_services));
 		echo("".$service." Erased.");
+		if($restartWeb==1){
+			exec("sudo service apache2 restart");	
+		}
 	}
 	else{
 	if(isset($_POST["submitSource"])){
