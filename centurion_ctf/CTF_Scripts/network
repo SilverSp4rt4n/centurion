@@ -92,8 +92,10 @@ def main():
         os.system("mkdir /opt/source/makedir")
         os.system("unzip -o " + sys.argv[1] + " -d /opt/source/makedir")
         os.system("make -C /opt/source/makedir")
-        output = subprocess.check_output("ls -Art /opt/source/makedir/ | tail -n 1",shell=True)
+        output = subprocess.check_output("ls -Art /opt/source/makedir/ | tail -n 1",shell=True).replace("\n","")
         os.system("mv \"/opt/source/makedir/`ls -Art /opt/source/makedir/| tail -n 1`\" /opt/challenges")
+        os.system("chown ctf1.ctf1 /opt/challenges/" + output)
+        os.system("chmod 4711 /opt/challenges/" + output)
         print(output)
         subprocess.Popen("/opt/challenges/"+output,shell=True)
     #Copy flag over

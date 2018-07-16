@@ -71,12 +71,12 @@ if($valid == "true"){
 			}elseif($val->{"Service Type"}=="Network"){
 				$cmd = "ps -A | grep ".$key." | wc -l";
 				exec($cmd,$output);
-				if($output[0]=="1" && file_exists("/opt/challenges/".$val->{"Flag"}) || $output[0]=="1" && $val->{"Flag"}=="None"){
+				if($output[0]=="1" and (file_exists("/opt/challenges/".$val->{"Flag"}) or $val->{"Flag"}=="None")){
 					$val->Status="Running";
-				}elseif(!file_exists("/opt/challenges/".$val->{"Flag"})){
+				}elseif(!file_exists("/opt/challenges/".$val->{"Flag"}) && $val->{"Flag"}!="None"){
 					$val->Status="Missing Flag";
 				}else{
-					$val->Status="Not Running";
+					$val->Status="Not Running: ".$val->{"Flag"};
 				}
 			}elseif($val->{"Service Type"}=="Web"){
 				$cmd1 = "ls /opt/challenges/web/ | wc -l";
