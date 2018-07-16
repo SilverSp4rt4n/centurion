@@ -12,7 +12,6 @@ A multi-part software suite focused on making security-based Raspberry Pi projec
 * General
   * Cleanup unsanitized user input
 * Centurion\_CTF
-  * Create "Live Mode": an operation which locks down the Pi during a CTF competition
   * Support uploading .zip files with C/C++ source code and a makefile
 
 ## Installation
