@@ -13,6 +13,7 @@ document.head.appendChild(imported);
 		<li>(Optional) Select the flag to be obtained after exploiting the vulnerable service </li>
 		<li>Deploy the service.</li>
 	</ol>
+	Helpful hint: When deploying a .zip archive for any service the root directory should not be in its own folder. Example: zip -r example.zip index.html js
 	<h2>Service Monitor</h2><hr/>
 	<table class="table" id="serviceTable">
 		<thead>
@@ -68,7 +69,7 @@ document.head.appendChild(imported);
 	<button type="button" id="deployService" onclick="deploy()" class="btn btn-danger"> Deploy Service </button>		
 	<br><hr/>
 	<h2>Upload Source Code</h2>
-	<p>Currently only C,C++, and Python source code is supported. Web applications with HTML, CSS, JS and PHP can be uploaded and deployed as a .zip archive</p>
+	<p>Currently only C,C++, and Python source code is supported. Web applications with HTML, CSS, JS and PHP can be uploaded and deployed as a .zip archive. C/C++ Code with a makefile can also be deployed from a .zip archive</p>
 	<form action ="php/CTF.php" method="post" enctype="multipart/form-data">
 		Select File to Upload:
 		<input type="file" name="sourceCode" id="sourceCode"><br>

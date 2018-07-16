@@ -71,7 +71,7 @@ if($valid == "true"){
 			}elseif($val->{"Service Type"}=="Network"){
 				$cmd = "ps -A | grep ".$key." | wc -l";
 				exec($cmd,$output);
-				if($output[0]=="1" && file_exists("/opt/challenges/".$val->{"Flag"})){
+				if($output[0]=="1" && file_exists("/opt/challenges/".$val->{"Flag"}) || $output[0]=="1" && $val->{"Flag"}=="None"){
 					$val->Status="Running";
 				}elseif(!file_exists("/opt/challenges/".$val->{"Flag"})){
 					$val->Status="Missing Flag";
