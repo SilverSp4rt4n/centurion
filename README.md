@@ -8,11 +8,10 @@ A multi-part software suite focused on making security-based Raspberry Pi projec
 |1.1.0	       |Web Application has been updated with an authentication system and a functional GUI for managing Wi-Fi connections.|
 |1.1.2	       |Centurion\_CTF added. Supports deploying vulnerable local and network services from C,C++ & Python source code.    |
 |1.1.3        |Centurion\_CTF now supports deploying vulnerable web applications by uploading them as .zip files                  |
+|1.1.4        |Centurion\_CTF now supports deploying C/C++ programs by uploading them as .zip files with a makefile included      |
 ## Todo List
 * General
   * Cleanup unsanitized user input
-* Centurion\_CTF
-  * Support uploading .zip files with C/C++ source code and a makefile
 
 ## Installation
 To install Centurion\_Core, run setup.sh inside the centurion\_core folder.
