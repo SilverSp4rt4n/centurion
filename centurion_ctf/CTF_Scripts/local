@@ -54,7 +54,7 @@ def main():
     #Get output name
     output = sys.argv[1][last(sys.argv[1],"/")+1:last(sys.argv[1],".")]
     #Get current directory
-    #cwd = os.getcwd() + "/"
+    cwd = os.getcwd() + "/"
     if(filetype=="c"):
         os.system("gcc " + sys.argv[1] + " -o " + cwd + output)
         os.system("sudo chown ctf2.ctf2 " + output)
