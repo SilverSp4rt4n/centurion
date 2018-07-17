@@ -54,8 +54,7 @@ def main():
     #Get output name
     output = sys.argv[1][last(sys.argv[1],"/")+1:last(sys.argv[1],".")]
     #Get current directory
-    cwd = os.getcwd() + "/"
-    print(cwd)
+    #cwd = os.getcwd() + "/"
     if(filetype=="c"):
         os.system("gcc " + sys.argv[1] + " -o " + cwd + output)
         os.system("sudo chown ctf2.ctf2 " + output)
@@ -85,12 +84,12 @@ def main():
         os.system("sudo mv ./" + output + " /opt/challenges/")
         os.system("rm " + output + ".cpp")
     elif(filetype=="zip"):
-        os.system("rm -r makedir")
-        os.system("mkdir /opt/source/makedir")
-        os.system("unzip -o " + sys.argv[1] + " -d /opt/source/makedir")
-        os.system("make -C /opt/source/makedir")
-        output = subprocess.check_output("ls -Art /opt/source/makedir/ | tail -n 1",shell=True).replace("\n","")
-        os.system("mv \"/opt/source/makedir/`ls -Art /opt/source/makedir/| tail -n 1`\" /opt/challenges")
+        os.system("rm -r /opt/makedir")
+        os.system("mkdir /opt/makedir")
+        os.system("unzip -o " + sys.argv[1] + " -d /opt/makedir")
+        os.system("make -C /opt/makedir")
+        output = subprocess.check_output("ls -Art /opt/makedir/ | tail -n 1",shell=True).replace("\n","")
+        os.system("mv \"/opt/makedir/`ls -Art /opt/makedir/| tail -n 1`\" /opt/challenges")
         os.system("chown ctf2.ctf2 /opt/challenges/" + output)
         os.system("chmod 4711 /opt/challenges/" + output)
     #Copy flag over
