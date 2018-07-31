@@ -51,7 +51,7 @@ sudo chown www-data.www-data /etc/auth/credentials.json
 sudo chown www-data.www-data /etc/auth/sessions.json
 sudo chmod 600 /etc/auth/credentials.json
 sudo chmod 600 /etc/auth/sessions.json
-Make a scripts folder and copy the ifaceSetup script there
+#Make a scripts folder and copy the ifaceSetup script there
 mkdir /etc/scripts
 cp ./config/Networking/Interface/ifaceSetup.py /etc/scripts/ifaceSetup.py
 /etc/scripts/ifaceSetup.py
